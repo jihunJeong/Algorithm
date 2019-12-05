@@ -41,10 +41,10 @@ while cnt1 != 0:
 		break
 
 	cnt1 -= 1
-	
-if n == 3:
-	print(1)
+
 if cnt1 != 0:
 	print(cnt1 + cnt2)
+elif n % 3 == 0: #This case is for multiple of 3 that cnt1 is 0
+	print(n // 3)
 else :
 	print(-1)
