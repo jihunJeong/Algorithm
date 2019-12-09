@@ -16,36 +16,7 @@ import math
 		- Greedy가 실패했을 때 DP 정규 방법으로 넘어간다.
 
 	Greedy에서 최적의 값을 찾기 위해서 두개의 List를 이용한다.
+
+	시작 값이 같지만 끝나는 값이 다를 수 있다. 이 때 이것을 비교하기 위해 기존에 있던 min함수를
+	오버라이딩을 해 내가 원하는 최솟값 찾기를 만든다.
 """
-
-n = int(input()) #회의의 개수
-
-start_time = [] #Declare Dictionary type
-finish_time = []
-
-for i in range(n):
-	start, finish = map(int, input().split())
-	
-	start_time.append(start)
-	finish_time.append(finish)
-
-"""논리 다시 짜고 접근하기
-min_start = min(start_time)
-min_finish = finish_time[start_time.index(min_start)]
-min_index = start_time.index(min_start)
-cnt = 0
-
-while min_finish <= max(finish_time): 
-	cnt += 1
-	tmp_start = min_finish
-
-	for i in range(len(start_time)):
-			if min_start == start_time[i]:
-				min_start = finish_time[start_time.index(min_start)] <= finish_time[i] ? min_start : finish_time[i] 
-				min_index = start_time.index(min_start)
-			elif tmp_start > start_time[i] and start_time > min_finish:
-				tmp_start = start_time
-	min_finish = finish_time[start_time.index(min_start)]	
-"""
-
-print(cnt)	
