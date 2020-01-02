@@ -1,5 +1,3 @@
-import sys
-
 """summarize 7579
 
 	7579 : 앱
@@ -22,7 +20,28 @@ import sys
 
 	Solve : Dynamic Programming
 """
+def application():
+	n, m = map(int, input().split())
 
-n, m = map(int, sys.stdin.readline().split())
-memory_list = list(map(int, sys.stdin.readline().split()))
-cost_list = list(map(int, sys,stdin.readline().split()))
+	memory = list(map(int, input().split()))
+	cost = list(map(int, input().split()))
+
+	dp = [[0 for x in range(sum(cost) + 1)] for y in range(n)]
+
+	for i in range(cost[0], sum(cost) + 1):
+		dp[0][i] = memory[0]
+
+	for i in range(1, n):
+		for j in range(sum(cost) + 1):
+			if j >= cost[i] and dp[i - 1][j] <= dp[i - 1][j - cost[i]] + memory[i]:
+				dp[i][j] = dp[i - 1][j - cost[i]] + memory[i]
+			else:
+				dp[i][j] = dp[i - 1][j]
+
+	for i in range(sum(cost) + 1):
+		for j in range(n):
+			if dp[j][i] >= m:
+				print(i)
+				return 0
+
+application()
