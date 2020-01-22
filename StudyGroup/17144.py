@@ -39,7 +39,7 @@ def findCleaner():
 			if room[y][x] == -1:
 				return [y, x]
 
-def moveDust_by_cleaner():
+def removeDust_upperCase():
 	pos_cleaner = findCleaner()
 	
 	current_y = pos_cleaner[0] - 1
@@ -56,30 +56,58 @@ def moveDust_by_cleaner():
 			new_y = current_y + 1
 		elif current_x != pos_cleaner[1]:
 			new_x = current_x - 1
-		print("%d %d" %(new_y, new_x))
-
+		
 		room[current_y][current_x] = room[new_y][new_x]
 		current_y = new_y
 		current_x = new_x
 
 		if new_y == pos_cleaner[0] and new_x == pos_cleaner[1]:
+			room[pos_cleaner[0]][pos_cleaner[1] + 1] = 0
+			break
+
+def removeDust_lowCase():
+	pos_cleaner = findCleaner()
+	
+	current_y = pos_cleaner[0] + 2
+	current_x = pos_cleaner[1]
+	new_y = current_y
+	new_x = current_x
+	
+	while True:
+		if current_y != len(room) - 1 and current_x == pos_cleaner[1]:
+			new_y = current_y + 1
+		elif current_y == len(room) - 1 and current_x != len(room[0]) - 1:
+			new_x = current_x + 1
+		elif current_x == len(room[0]) - 1 and current_y != pos_cleaner[0] + 1:
+			new_y = current_y - 1
+		elif current_x != pos_cleaner[1]:
+			new_x = current_x - 1
+		
+		room[current_y][current_x] = room[new_y][new_x]
+		current_y = new_y
+		current_x = new_x
+
+		if new_y == pos_cleaner[0] + 1 and new_x == pos_cleaner[1]:
+			room[pos_cleaner[0] + 1][pos_cleaner[1] + 1] = 0
 			break
 
 def step2():
-	moveDust_by_cleaner()
+	removeDust_upperCase()
+	removeDust_lowCase()
 	
 r, c, t = map(int, sys.stdin.readline().split())
-
 room = list()
-spreaded_dust_room = [[0 for x in range(c)] for y in range(r)]
 
 for _ in range(r):
 	room.append(list(map(int, sys.stdin.readline().split())))
 
-step1()
-step2()
-
+for _ in range(t):
+	spreaded_dust_room = [[0 for x in range(c)] for y in range(r)]
+	step1()
+	step2()
+	
+total = 2
 for y in range(r):
-	for x in range(c):
-		print(room[y][x], end=" ")
-	print(" ")
+	total = total + sum(room[y])
+
+print(total)
