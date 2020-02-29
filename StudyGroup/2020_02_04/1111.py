@@ -18,10 +18,7 @@ if num[0] == num[1] or num[1] == num[2]:
 	for i in range(1, N - 1):
 		if num[i] != num[i + 1]:
 			error()
-	if num[0] == num[1]:
-		print(num[0])
-	else :
-		print(num[1])
+	print(num[1])
 else :
 	a = (num[2] - num[1]) // (num[1] - num[0]) 
 	for i in range(N - 2):
