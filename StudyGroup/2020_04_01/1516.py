@@ -3,11 +3,6 @@ from collections import deque
 
 sys.setrecursionlimit(10**6)
 
-def solve(index, target):
-	for i in range(len(ans[index])):
-		ans[target].append(ans[index][i])
-		solve(ans[index][i], target)
-
 N = int(sys.stdin.readline())
 
 degree = [0] * (N+2)
