@@ -1,38 +1,42 @@
 from sys import stdin
-from collections import Counter
+from collections import defaultdict, deque
 
-n = int(stdin.readline())
-arr = []
+t = int(stdin.readline())
 
-avg = 0
-center = 0
-freqt = 0
-rang = 0
 
-for i in range(n):
-    arr.append(int(stdin.readline()))
+for case in range(t):
 
-arr.sort()
+    col, row, target = map(int, stdin.readline().split())
 
-avg = round(sum(arr) / len(arr))
+    graph = [[0 for _ in range(row + 1)] for _ in range(col + 1)]
+    visted = [[0 for _ in range(row + 1)] for _ in range(col + 1)]
+    dq = deque([])
+    temp_dq = deque([])
 
-center = arr[len(arr)//2]
+    for i in range(target):
+        x, y = list(map(int, stdin.readline().split()))
+        graph[x][y] = 1
+        dq.append([x, y])
 
-cnt = Counter(arr)
-freqt = cnt.most_common(2)
-fre = freqt[0][0]
+    ck = 0
 
-rang = max(arr)-min(arr)
-if n == 1:
-    fre = arr[0]
-    print(avg)
-    print(center)
-    print(fre)
-    print(rang)
-else:
-    if freqt[0][1] == freqt[1][1]:
-        fre = freqt[1][0]
-    print(avg)
-    print(center)
-    print(fre)
-    print(rang)
+    while dq:
+        temp = dq.popleft()
+        x = temp[0]
+        y = temp[1]
+        if graph[x][y] == 1 and visted[x][y] != 1:
+            visted[x][y] = 1
+            ck += 1
+            if graph[x + 1][y] == 1 and visted[x + 1][y] == 1:
+                ck -= 1
+                continue
+            elif graph[x - 1][y] == 1 and visted[x - 1][y] == 1:
+                ck -= 1
+                continue
+            elif graph[x][y+1] == 1 and visted[x][y+1] == 1:
+                ck -= 1
+                continue
+            elif graph[x][y-1] == 1 and visted[x][y-1] == 1:
+                ck -= 1
+                continue
+    print(ck)
